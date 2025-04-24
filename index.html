@@ -767,5 +767,21 @@
             document.getElementById('gerar-certificado').addEventListener('click', gerarCertificado);
         });
     </script>
+    <script>
+    // Função para lidar com o clique nos números
+    document.addEventListener('DOMContentLoaded', function() {
+        // Seleciona todos os elementos de número
+        const numeros = document.querySelectorAll('.numero');
+        
+        // Adiciona um evento de clique a cada número
+        numeros.forEach(numero => {
+            numero.addEventListener('click', function() {
+                // Alterna a classe 'selecionado' ao número clicado
+                numero.classList.toggle('selecionado');
+            });
+        });
+    });
+</script>
+
 </body>
 </html>
