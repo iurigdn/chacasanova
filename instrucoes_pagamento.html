@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instruções de Pagamento - Chá de Casa Nova</title>
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #FFC107;
+            --text-color: #333;
+            --light-bg: #f9f9f9;
+            --accent-color: #2196F3;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--light-bg);
+            padding-bottom: 10px;
+        }
+        
+        .step {
+            margin-bottom: 25px;
+            padding-left: 15px;
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .step-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .step-content {
+            margin-left: 40px;
+        }
+        
+        .pix-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f0f8ff;
+            border-radius: 5px;
+            border: 1px dashed var(--accent-color);
+        }
+        
+        .pix-info p {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .pix-key {
+            font-size: 1.2rem;
+            background-color: #e8f5e9;
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: 1px solid var(--primary-color);
+            margin-bottom: 10px;
+            font-family: monospace;
+        }
+        
+        .highlight {
+            background-color: #fff9c4;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        
+        .warning {
+            background-color: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .tip {
+            background-color: #e8f5e9;
+            border-left: 4px solid var(--primary-color);
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .button:hover {
+            background-color: #388E3C;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .image-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .caption {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>INSTRUÇÕES DE PAGAMENTO</h1>
+        <p class="subtitle">Chá de Casa Nova - Passo a Passo</p>
+    </header>
+    
+    <div class="card">
+        <h2>Como Participar</h2>
+        
+        <div class="step">
+            <span class="step-number">1</span>
+            <div class="step-title">Escolha seu número da sorte</div>
+            <div class="step-content">
+                <p>Acesse a <a href="index.html">página principal</a> e escolha um número disponível na cartela. Os números disponíveis estão em verde, enquanto os já escolhidos estão em rosa.</p>
+                <p>Você pode clicar diretamente no número desejado ou selecioná-lo no formulário de participação.</p>
+            </div>
+        </div>
+        
+        <div class="step">
+            <span class="step-number">2</span>
+            <div class="step-title">Realize o pagamento via PIX</div>
+            <div class="step-content">
+                <p>Cada número custa <strong>R$ 25,00</strong>. Faça o pagamento utilizando a chave PIX abaixo:</p>
+                
+                <div class="pix-info">
+                    <p>Chave PIX (Telefone):</p>
+                    <div class="pix-key">32988016086</div>
+                    <p>Valor: R$ 25,00</p>
+                </div>
+                
+                <div class="tip">
+                    <p><strong>Dica:</strong> Ao fazer o PIX, inclua no campo de descrição/mensagem o número escolhido e seu nome para facilitar a identificação.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="step">
+            <span class="step-number">3</span>
+            <div class="step-title">Envie o comprovante de pagamento</div>
+            <div class="step-content">
+                <p>Após realizar o pagamento, envie o comprovante junto com o número escolhido para confirmar sua participação.</p>
+                <p>Você pode enviar o comprovante por:</p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>WhatsApp: <strong>(32) 98801-6086</strong></li>
+                    <li>Ou entregar pessoalmente</li>
+                </ul>
+                
+                <div class="warning">
+                    <p><strong>Importante:</strong> Sua participação só será confirmada após o envio do comprovante e validação do pagamento.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="step">
+            <span class="step-number">4</span>
+            <div class="step-title">Aguarde o sorteio</div>
+            <div class="step-content">
+                <p>O sorteio será realizado no dia <strong>15/06/2025</strong>.</p>
+                <p>O resultado será divulgado nas redes sociais e todos os participantes serão notificados.</p>
+                <p>O ganhador receberá um PIX no valor de <strong>R$ 250,00</strong>!</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h2>Passo a Passo para Fazer PIX</h2>
+        
+        <div class="step">
+            <span class="step-number">1</span>
+            <div class="step-title">Abra o aplicativo do seu banco</div>
+            <div class="step-content">
+                <p>Acesse o aplicativo do seu banco ou instituição financeira e faça login na sua conta.</p>
+            </div>
+        </div>
+        
+        <div class="step">
+            <span class="step-number">2</span>
+            <div class="step-title">Localize a opção PIX</div>
+            <div class="step-content">
+                <p>Procure pela opção "PIX" ou "Transferência PIX" no menu principal do aplicativo.</p>
+            </div>
+        </div>
+        
+        <div class="step">
+            <span class="step-number">3</span>
+            <div class="step-title">Selecione "Transferir"</div>
+            <div class="step-content">
+                <p>Escolha a opção para realizar uma transferência via PIX.</p>
+            </div>
+        </div>
+        
+        <div class="step">
+            <span class="step-number">4</span>
+            <div class="step-title">Insira a chave PIX</div>
+            <div class="step-content">
+                <p>Digite a chave PIX <span class="highlight">32988016086</span> (telefone).</p>
+            </div>
+        </div>
+        
+        <div class="step">
+            <span class="step-number">5</span>
+            <div class="step-title">Informe o valor</div>
+            <div class="step-content">
+                <p>Digite o valor de <span class="highlight">R$ 25,00</span> para cada número que deseja comprar.</p>
+                <div class="tip">
+                    <p><strong>Dica:</strong> Se quiser comprar mais de um número, você pode fazer um único PIX com o valor total (ex: R$ 50,00 para dois números) e especificar os números escolhidos na mensagem.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="step">
+            <span class="step-number">6</span>
+            <div class="step-title">Adicione uma descrição</div>
+            <div class="step-content">
+                <p>No campo de descrição ou mensagem, escreva: <span class="highlight">Chá de Casa Nova - Número(s): X - Nome: Seu Nome</span></p>
+            </div>
+        </div>
+        
+        <div class="step">
+            <span class="step-number">7</span>
+            <div class="step-title">Confirme a transferência</div>
+            <div class="step-content">
+                <p>Verifique se todas as informações estão corretas e confirme a transferência.</p>
+            </div>
+        </div>
+        
+        <div class="step">
+            <span class="step-number">8</span>
+            <div class="step-title">Salve ou compartilhe o comprovante</div>
+            <div class="step-content">
+                <p>Após a conclusão, salve ou faça um print do comprovante e envie junto com o número escolhido para o WhatsApp (32) 98801-6086.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h2>Perguntas Frequentes</h2>
+        
+        <div class="step">
+            <div class="step-title">Posso escolher mais de um número?</div>
+            <div class="step-content">
+                <p>Sim! Você pode escolher quantos números desejar. Cada número custa R$ 25,00 e aumenta suas chances de ganhar.</p>
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-title">Como saberei se meu número foi confirmado?</div>
+            <div class="step-content">
+                <p>Após o envio do comprovante, você receberá uma confirmação e seu nome aparecerá na lista de participantes na página principal.</p>
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-title">O que acontece se o número que eu quero já foi escolhido?</div>
+            <div class="step-content">
+                <p>Os números já escolhidos aparecem em rosa na cartela. Você precisará selecionar outro número que esteja disponível (em verde).</p>
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-title">Como será feito o sorteio?</div>
+            <div class="step-content">
+                <p>O sorteio será realizado no dia 15/06/2025 de forma transparente e será transmitido ao vivo nas redes sociais.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="index.html" class="button">Voltar para a Página Principal</a>
+    </div>
+    
+    <footer>
+        <p>© 2025 - Chá de Casa Nova</p>
+        <p>Em caso de dúvidas, entre em contato pelo WhatsApp: (32) 98801-6086</p>
+    </footer>
+</body>
+</html>

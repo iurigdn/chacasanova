@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chá de Casa Nova - Controle de Números</title>
+    <style>
+        :root {
+            --primary-color: #FFD700; /* Amarelo dourado */
+            --secondary-color: #4CAF50; /* Verde */
+            --accent-color: #FF6B6B; /* Rosa suave */
+            --text-color: #333;
+            --light-bg: #f9f9f9;
+            --white: #ffffff;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-image: url('images/margaridas_padrao.png');
+            background-size: 400px;
+            background-opacity: 0.2;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border: 2px solid var(--primary-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            width: 60px;
+            height: 60px;
+            background-image: url('images/margaridas_amarelas.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            transform: rotate(-15deg);
+            z-index: 1;
+        }
+        
+        header::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            right: -10px;
+            width: 60px;
+            height: 60px;
+            background-image: url('images/margaridas_amarelas.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            transform: rotate(15deg);
+            z-index: 1;
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .subtitle {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .card {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border: 1px solid var(--primary-color);
+        }
+        
+        .instructions {
+            margin-bottom: 20px;
+        }
+        
+        .instructions h2 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .instructions ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+            position: relative;
+        }
+        
+        .instructions li:before {
+            content: "•";
+            color: var(--primary-color);
+            font-weight: bold;
+            position: absolute;
+            left: -15px;
+        }
+        
+        .pix-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f0f8ff;
+            border-radius: 5px;
+            border: 1px dashed var(--primary-color);
+        }
+        
+        .pix-info p {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .pix-key {
+            font-size: 1.2rem;
+            background-color: #e8f5e9;
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: 1px solid var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .sorteio {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .legenda {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .legenda-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .legenda-cor {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+        }
+        
+        .disponivel {
+            background-color: var(--light-bg);
+            border: 2px solid var(--primary-color);
+        }
+        
+        .escolhido {
+            background-color: var(--accent-color);
+        }
+        
+        .cartela {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .numero {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 40px;
+            background-color: var(--light-bg);
+            border: 2px solid var(--primary-color);
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .numero:hover {
+            background-color: var(--secondary-color);
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        .numero.selecionado {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+            position: relative;
+        }
+        
+        .numero.selecionado:after {
+            content: "✓";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.2rem;
+        }
+        
+        .admin-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--primary-color);
+        }
+        
+        .admin-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .form-container {
+            margin-top: 20px;
+        }
+        
+        .form-container h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #e6c300;
+        }
+        
+        .participantes {
+            margin-top: 20px;
+        }
+        
+        .participantes h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .participante-lista {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .participante {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .participante:last-child {
+            border-bottom: none;
+        }
+        
+        .admin-login {
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .admin-button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+        }
+        
+        .admin-button:hover {
+            background-color: #3e8e41;
+        }
+        
+        .admin-login-form {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .nav-button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .nav-button:hover {
+            background-color: #3e8e41;
+            transform: scale(1.05);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+        }
+        
+        @media (min-width: 768px) {
+            .container {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            
+            .card {
+                flex: 1 1 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>CHÁ DE CASA NOVA</h1>
+        <p class="subtitle">Ajude a realizar o sonho do meu novo lar e concorra a um PIX de R$ 250,00</p>
+    </header>
+    
+    <div class="container">
+        <div class="card">
+            <div class="instructions">
+                <h2>COMO FUNCIONA:</h2>
+                <ul>
+                    <li>Escolha um número da cartela (confira os já escolhidos)</li>
+                    <li>Envie o valor via PIX para <strong>32988016086</strong></li>
+                    <li>Envie o comprovante junto com o número escolhido</li>
+                </ul>
+            </div>
+            
+            <div class="pix-info">
+                <p>Chave PIX:</p>
+                <div class="pix-key">32988016086</div>
+                <p>Valor: R$ 25,00</p>
+            </div>
+            
+            <div class="sorteio">
+                SORTEIO: Dia 15/05/2025
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>CARTELA DE NÚMEROS</h2>
+            
+            <div class="legenda">
+                <div class="legenda-item">
+                    <div class="legenda-cor disponivel"></div>
+                    <span>Disponível</span>
+                </div>
+                <div class="legenda-item">
+                    <div class="legenda-cor escolhido"></div>
+                    <span>Escolhido</span>
+                </div>
+            </div>
+            
+            <div class="cartela" id="cartela">
+                <!-- Os números serão inseridos via JavaScript -->
+            </div>
+        </div>
+    </div>
+    
+    <div class="navigation">
+        <a href="sorteio.html" class="nav-button">Página do Sorteio</a>
+        <a href="mural_desejos.html" class="nav-button">Mural de Desejos</a>
+        <button id="admin-toggle" class="admin-button">Área do Administrador</button>
+    </div>
+    
+    <div class="admin-login-form" id="admin-login-form">
+        <div class="form-group">
+            <label for="admin-senha">Senha de Administrador:</label>
+            <input type="password" id="admin-senha">
+        </div>
+        <button id="admin-login-button">Entrar</button>
+    </div>
+    
+    <div class="card" id="admin-panel" style="display: none; margin-top: 20px;">
+        <div class="admin-section">
+            <h2 class="admin-title">Painel do Administrador</h2>
+            
+            <div class="form-container">
+                <h2>ADICIONAR PARTICIPANTE</h2>
+                <form id="form-participante">
+                    <div class="form-group">
+                        <label for="nome">Nome:</label>
+                        <input type="text" id="nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contato">Contato:</label>
+                        <input type="text" id="contato" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="numero">Número escolhido:</label>
+                        <select id="numero" required>
+                            <option value="">Selecione um número</option>
+                            <!-- As opções serão inseridas via JavaScript -->
+                        </select>
+                    </div>
+                    <button type="submit">Adicionar Participante</button>
+                </form>
+            </div>
+            
+            <div class="participantes">
+                <h2>PARTICIPANTES</h2>
+                <div class="participante-lista" id="participante-lista">
+                    <!-- Os participantes serão inseridos via JavaScript -->
+                </div>
+            </div>
+            
+            <div class="form-container" style="margin-top: 30px;">
+                <h2>GERENCIAR DESEJOS</h2>
+                <div id="desejos-pendentes">
+                    <!-- Os desejos pendentes serão inseridos via JavaScript -->
+                </div>
+            </div>
+            
+            <div class="form-container" style="margin-top: 30px;">
+                <h2>GERAR CERTIFICADO</h2>
+                <div class="form-group">
+                    <label for="certificado-numero">Número do Participante:</label>
+                    <select id="certificado-numero" required>
+                        <option value="">Selecione um número</option>
+                        <!-- As opções serão inseridas via JavaScript -->
+                    </select>
+                </div>
+                <button id="gerar-certificado">Gerar Certificado</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2025 - Chá de Casa Nova</p>
+        <p>Em caso de dúvidas, entre em contato pelo WhatsApp: (32) 98801-6086</p>
+    </footer>
+
+    <script>
+        // Dados iniciais
+        let dados = {
+            numeros_disponiveis: Array.from({length: 150}, (_, i) => i + 1),
+            numeros_escolhidos: [],
+            participantes: [],
+            desejos: []
+        };
+        
+        // Senha do administrador (em uma aplicação real, isso seria feito no servidor)
+        const ADMIN_SENHA = "cha2025";
+        
+        // Função para carregar dados do localStorage
+        function carregarDados() {
+            const dadosSalvos = localStorage.getItem('chaCasaNova');
+            if (dadosSalvos) {
+                dados = JSON.parse(dadosSalvos);
+            }
+            atualizarInterface();
+        }
+        
+        // Função para salvar dados no localStorage
+        function salvarDados() {
+            localStorage.setItem('chaCasaNova', JSON.stringify(dados));
+        }
+        
+        // Função para atualizar a interface
+        function atualizarInterface() {
+            atualizarCartela();
+            atualizarSelectNumeros();
+            
+            // Atualizar apenas se o painel de admin estiver visível
+            if (document.getElementById('admin-panel').style.display !== 'none') {
+                atualizarParticipantes();
+                atualizarDesejosPendentes();
+                atualizarSelectCertificado();
+            }
+        }
+        
+        // Função para atualizar a cartela
+        function atualizarCartela() {
+            const cartela = document.getElementById('cartela');
+            cartela.innerHTML = '';
+            
+            for (let i = 1; i <= 150; i++) {
+                const numeroDiv = document.createElement('div');
+                numeroDiv.className = 'numero';
+                if (dados.numeros_escolhidos.includes(i)) {
+                    numeroDiv.classList.add('selecionado');
+                }
+                numeroDiv.textContent = i;
+                cartela.appendChild(numeroDiv);
+            }
+        }
+        
+        // Função para atualizar o select de números disponíveis
+        function atualizarSelectNumeros() {
+            const select = document.getElementById('numero');
+            // Limpa as opções existentes, mantendo a primeira
+            while (select.options.length > 1) {
+                select.remove(1);
+            }
+            
+            // Adiciona os números disponíveis
+            dados.numeros_disponiveis.sort((a, b) => a - b).forEach(num => {
+                const option = document.createElement('option');
+                option.value = num;
+                option.textContent = num;
+                select.appendChild(option);
+            });
+        }
+        
+        // Função para atualizar a lista de participantes
+        function atualizarParticipantes() {
+            const lista = document.getElementById('participante-lista');
+            lista.innerHTML = '';
+            
+            if (dados.participantes.length === 0) {
+                lista.innerHTML = '<p style="padding: 10px;">Nenhum participante registrado.</p>';
+                return;
+            }
+            
+            dados.participantes.forEach(p => {
+                const div = document.createElement('div');
+                div.className = 'participante';
+                div.innerHTML = `
+                    <span><strong>${p.nome}</strong></span>
+                    <span>Número: ${p.numero}</span>
+                    <span>Contato: ${p.contato}</span>
+                `;
+                lista.appendChild(div);
+            });
+        }
+        
+        // Função para atualizar a lista de desejos pendentes
+        function atualizarDesejosPendentes() {
+            const container = document.getElementById('desejos-pendentes');
+            container.innerHTML = '';
+            
+            const desejosPendentes = dados.desejos ? dados.desejos.filter(d => d.status === 'pendente') : [];
+            
+            if (desejosPendentes.length === 0) {
+                container.innerHTML = '<p>Nenhum desejo pendente de aprovação.</p>';
+                return;
+            }
+            
+            desejosPendentes.forEach(desejo => {
+                const div = document.createElement('div');
+                div.style.padding = '10px';
+                div.style.marginBottom = '10px';
+                div.style.border = '1px solid #ddd';
+                div.style.borderRadius = '5px';
+                
+                div.innerHTML = `
+                    <p><strong>Nome:</strong> ${desejo.nome}</p>
+                    <p><strong>Mensagem:</strong> ${desejo.mensagem}</p>
+                    <p><strong>Número:</strong> ${desejo.numero || 'Não informado'}</p>
+                    <p><strong>Data:</strong> ${new Date(desejo.data).toLocaleDateString('pt-BR')}</p>
+                    <div style="margin-top: 10px;">
+                        <button class="aprovar-desejo" data-index="${dados.desejos.indexOf(desejo)}">Aprovar</button>
+                        <button class="rejeitar-desejo" data-index="${dados.desejos.indexOf(desejo)}">Rejeitar</button>
+                    </div>
+                `;
+                
+                container.appendChild(div);
+            });
+            
+            // Adicionar eventos aos botões
+            document.querySelectorAll('.aprovar-desejo').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    dados.desejos[index].status = 'aprovado';
+                    salvarDados();
+                    atualizarDesejosPendentes();
+                });
+            });
+            
+            document.querySelectorAll('.rejeitar-desejo').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    dados.desejos[index].status = 'rejeitado';
+                    salvarDados();
+                    atualizarDesejosPendentes();
+                });
+            });
+        }
+        
+        // Função para atualizar o select de certificado
+        function atualizarSelectCertificado() {
+            const select = document.getElementById('certificado-numero');
+            // Limpa as opções existentes, mantendo a primeira
+            while (select.options.length > 1) {
+                select.remove(1);
+            }
+            
+            // Adiciona os números escolhidos
+            dados.numeros_escolhidos.sort((a, b) => a - b).forEach(num => {
+                const participante = dados.participantes.find(p => p.numero === num);
+                if (participante) {
+                    const option = document.createElement('option');
+                    option.value = num;
+                    option.textContent = `${num} - ${participante.nome}`;
+                    select.appendChild(option);
+                }
+            });
+        }
+        
+        // Função para adicionar um participante
+        function adicionarParticipante(event) {
+            event.preventDefault();
+            
+            const nome = document.getElementById('nome').value.trim();
+            const contato = document.getElementById('contato').value.trim();
+            const numeroSelect = document.getElementById('numero');
+            const numero = parseInt(numeroSelect.value);
+            
+            if (!nome || !contato || isNaN(numero)) {
+                alert('Por favor, preencha todos os campos corretamente.');
+                return;
+            }
+            
+            // Verifica se o número está disponível
+            if (!dados.numeros_disponiveis.includes(numero)) {
+                alert('Este número já foi escolhido. Por favor, selecione outro.');
+                return;
+            }
+            
+            // Atualiza os dados
+            dados.numeros_disponiveis = dados.numeros_disponiveis.filter(n => n !== numero);
+            dados.numeros_escolhidos.push(numero);
+            dados.participantes.push({
+                nome,
+                contato,
+                numero
+            });
+            
+            // Salva e atualiza a interface
+            salvarDados();
+            atualizarInterface();
+            
+            // Limpa o formulário
+            document.getElementById('form-participante').reset();
+            
+            alert(`Participante ${nome} adicionado com sucesso com o número ${numero}!`);
+        }
+        
+        // Função para gerar certificado
+        function gerarCertificado() {
+            const numeroSelect = document.getElementById('certificado-numero');
+            const numero = parseInt(numeroSelect.value);
+            
+            if (isNaN(numero)) {
+                alert('Por favor, selecione um número válido.');
+                return;
+            }
+            
+            const participante = dados.participantes.find(p => p.numero === numero);
+            if (!participante) {
+                alert('Participante não encontrado.');
+                return;
+            }
+            
+            // Redirecionar para a página de certificado com os parâmetros
+            const url = `certificado.html?nome=${encodeURIComponent(participante.nome)}&numero=${numero}&data=${encodeURIComponent(new Date().toLocaleDateString('pt-BR'))}`;
+            window.open(url, '_blank');
+        }
+        
+        // Função para mostrar/esconder o formulário de login de administrador
+        function toggleAdminLogin() {
+            const form = document.getElementById('admin-login-form');
+            form.style.display = form.style.display === 'none' || form.style.display === '' ? 'block' : 'none';
+        }
+        
+        // Função para verificar a senha do administrador
+        function verificarSenhaAdmin() {
+            const senha = document.getElementById('admin-senha').value;
+            if (senha === ADMIN_SENHA) {
+                document.getElementById('admin-panel').style.display = 'block';
+                document.getElementById('admin-login-form').style.display = 'none';
+                atualizarParticipantes();
+                atualizarDesejosPendentes();
+                atualizarSelectCertificado();
+            } else {
+                alert('Senha incorreta.');
+            }
+        }
+        
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            carregarDados();
+            document.getElementById('form-participante').addEventListener('submit', adicionarParticipante);
+            document.getElementById('admin-toggle').addEventListener('click', toggleAdminLogin);
+            document.getElementById('admin-login-button').addEventListener('click', verificarSenhaAdmin);
+            document.getElementById('gerar-certificado').addEventListener('click', gerarCertificado);
+        });
+    </script>
+</body>
+</html>

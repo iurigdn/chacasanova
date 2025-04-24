@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mural de Desejos - Chá de Casa Nova</title>
+    <style>
+        :root {
+            --primary-color: #FFD700; /* Amarelo dourado */
+            --secondary-color: #4CAF50; /* Verde */
+            --accent-color: #FF6B6B; /* Rosa suave */
+            --text-color: #333;
+            --light-bg: #f9f9f9;
+            --white: #ffffff;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-image: url('images/margaridas_padrao.png');
+            background-size: 400px;
+            background-opacity: 0.2;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border: 2px solid var(--primary-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            width: 60px;
+            height: 60px;
+            background-image: url('images/margaridas_amarelas.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            transform: rotate(-15deg);
+            z-index: 1;
+        }
+        
+        header::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            right: -10px;
+            width: 60px;
+            height: 60px;
+            background-image: url('images/margaridas_amarelas.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            transform: rotate(15deg);
+            z-index: 1;
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .subtitle {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .card {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border: 1px solid var(--primary-color);
+        }
+        
+        .mural-description {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .form-container {
+            margin-bottom: 30px;
+        }
+        
+        .form-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #e6c300;
+            transform: scale(1.05);
+        }
+        
+        .mural-title {
+            color: var(--primary-color);
+            margin: 30px 0 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+        
+        .mural-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .mural-item {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--primary-color);
+            position: relative;
+        }
+        
+        .mural-item::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 30px;
+            height: 30px;
+            background-image: url('images/margaridas_amarelas.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            transform: rotate(15deg);
+            opacity: 0.7;
+        }
+        
+        .mural-author {
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+        
+        .mural-message {
+            margin-bottom: 10px;
+        }
+        
+        .mural-date {
+            font-size: 0.8rem;
+            color: #777;
+            text-align: right;
+            font-style: italic;
+        }
+        
+        .mural-empty {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+            font-style: italic;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .nav-button {
+            background-color: var(--secondary-color);
+            color: var(--white);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .nav-button:hover {
+            background-color: #3e8e41;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .mural-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>CHÁ DE CASA NOVA</h1>
+        <p class="subtitle">Mural de Desejos</p>
+    </header>
+    
+    <div class="container">
+        <div class="card">
+            <div class="mural-description">
+                <p>Deixe uma mensagem de carinho, boas energias ou um desejo especial para o novo lar!</p>
+                <p>Sua mensagem será exibida no mural após aprovação.</p>
+            </div>
+            
+            <div class="form-container">
+                <h2 class="form-title">Envie seu desejo</h2>
+                <form id="desejo-form">
+                    <div class="form-group">
+                        <label for="nome">Seu Nome:</label>
+                        <input type="text" id="nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mensagem">Sua Mensagem:</label>
+                        <textarea id="mensagem" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="numero">Seu Número (opcional):</label>
+                        <input type="number" id="numero" min="1" max="150">
+                    </div>
+                    <button type="submit">Enviar Desejo</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2 class="mural-title">Desejos para o Novo Lar</h2>
+            
+            <div class="mural-container" id="mural-container">
+                <!-- Os desejos serão inseridos aqui via JavaScript -->
+                <div class="mural-empty" id="mural-empty">
+                    Nenhum desejo enviado ainda. Seja o primeiro a deixar uma mensagem!
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="navigation">
+        <a href="index.html" class="nav-button">Voltar para a Página Principal</a>
+    </div>
+    
+    <footer>
+        <p>© 2025 - Chá de Casa Nova</p>
+    </footer>
+
+    <script>
+        // Função para formatar a data
+        function formatarData(data) {
+            const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+            return new Date(data).toLocaleDateString('pt-BR', options);
+        }
+        
+        // Função para carregar os desejos do localStorage
+        function carregarDesejos() {
+            const dadosString = localStorage.getItem('chaCasaNova');
+            if (!dadosString) return [];
+            
+            const dados = JSON.parse(dadosString);
+            return dados.desejos || [];
+        }
+        
+        // Função para salvar um novo desejo
+        function salvarDesejo(desejo) {
+            const dadosString = localStorage.getItem('chaCasaNova');
+            let dados = dadosString ? JSON.parse(dadosString) : {
+                numeros_disponiveis: Array.from({length: 150}, (_, i) => i + 1),
+                numeros_escolhidos: [],
+                participantes: [],
+                desejos: []
+            };
+            
+            // Adicionar o status "pendente" ao desejo
+            desejo.status = 'pendente';
+            
+            // Adicionar o desejo à lista
+            if (!dados.desejos) dados.desejos = [];
+            dados.desejos.push(desejo);
+            
+            // Salvar os dados atualizados
+            localStorage.setItem('chaCasaNova', JSON.stringify(dados));
+        }
+        
+        // Função para exibir os desejos aprovados no mural
+        function exibirDesejos() {
+            const desejos = carregarDesejos().filter(d => d.status === 'aprovado');
+            const muralContainer = document.getElementById('mural-container');
+            const muralEmpty = document.getElementById('mural-empty');
+            
+            if (desejos.length === 0) {
+                muralEmpty.style.display = 'block';
+                return;
+            }
+            
+            muralEmpty.style.display = 'none';
+            
+            // Limpar o container
+            muralContainer.innerHTML = '';
+            
+            // Adicionar cada desejo ao mural
+            desejos.forEach(desejo => {
+                const desejoElement = document.createElement('div');
+                desejoElement.className = 'mural-item';
+                
+                desejoElement.innerHTML = `
+                    <div class="mural-author">${desejo.nome}</div>
+                    <div class="mural-message">${desejo.mensagem}</div>
+                    <div class="mural-date">${formatarData(desejo.data)}</div>
+                `;
+                
+                muralContainer.appendChild(desejoElement);
+            });
+        }
+        
+        // Função para lidar com o envio do formulário
+        document.getElementById('desejo-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const nome = document.getElementById('nome').value.trim();
+            const mensagem = document.getElementById('mensagem').value.trim();
+            const numero = document.getElementById('numero').value ? parseInt(document.getElementById('numero').value) : null;
+            
+            if (!nome || !mensagem) {
+                alert('Por favor, preencha seu nome e mensagem.');
+                return;
+            }
+            
+            // Criar o objeto do desejo
+            const desejo = {
+                nome,
+                mensagem,
+                numero,
+                data: new Date().toISOString(),
+                status: 'pendente'
+            };
+            
+            // Salvar o desejo
+            salvarDesejo(desejo);
+            
+            // Limpar o formulário
+            document.getElementById('desejo-form').reset();
+            
+            // Exibir mensagem de sucesso
+            alert('Seu desejo foi enviado com sucesso e será exibido após aprovação!');
+        });
+        
+        // Carregar os desejos ao carregar a página
+        document.addEventListener('DOMContentLoaded', exibirDesejos);
+    </script>
+</body>
+</html>

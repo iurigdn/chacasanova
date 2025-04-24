@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteio - Chá de Casa Nova</title>
+    <style>
+        :root {
+            --primary-color: #FFD700; /* Amarelo dourado */
+            --secondary-color: #4CAF50; /* Verde */
+            --accent-color: #FF6B6B; /* Rosa suave */
+            --text-color: #333;
+            --light-bg: #f9f9f9;
+            --white: #ffffff;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-image: url('images/margaridas_padrao.png');
+            background-size: 400px;
+            background-opacity: 0.2;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border: 2px solid var(--primary-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            width: 60px;
+            height: 60px;
+            background-image: url('images/margaridas_amarelas.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            transform: rotate(-15deg);
+            z-index: 1;
+        }
+        
+        header::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            right: -10px;
+            width: 60px;
+            height: 60px;
+            background-image: url('images/margaridas_amarelas.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            transform: rotate(15deg);
+            z-index: 1;
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .subtitle {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .card {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border: 1px solid var(--primary-color);
+        }
+        
+        .countdown {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 10px;
+            border-radius: 5px;
+            min-width: 60px;
+        }
+        
+        .countdown-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .countdown-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+        
+        .sorteio-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .sorteio-title {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .sorteio-description {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .sorteio-button {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .sorteio-button:hover {
+            background-color: #e6c300;
+            transform: scale(1.05);
+        }
+        
+        .sorteio-button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .sorteio-result {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: rgba(255, 215, 0, 0.1);
+            border-radius: 10px;
+            border: 2px dashed var(--primary-color);
+        }
+        
+        .result-title {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            text-align: center;
+        }
+        
+        .winner-number {
+            font-size: 4rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            margin: 20px 0;
+        }
+        
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            display: none;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .nav-button {
+            background-color: var(--secondary-color);
+            color: var(--white);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .nav-button:hover {
+            background-color: #3e8e41;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+        }
+        
+        @media (min-width: 768px) {
+            .container {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            
+            .card {
+                flex: 1 1 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>CHÁ DE CASA NOVA</h1>
+        <p class="subtitle">Sorteio do PIX de R$ 250,00</p>
+    </header>
+    
+    <div class="container">
+        <div class="card">
+            <div class="countdown">
+                <h2>Contagem Regressiva para o Sorteio</h2>
+                <p>O sorteio será realizado em:</p>
+                <div class="countdown-timer" id="countdown">
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="days">00</span>
+                        <span class="countdown-label">Dias</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="hours">00</span>
+                        <span class="countdown-label">Horas</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="minutes">00</span>
+                        <span class="countdown-label">Minutos</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="seconds">00</span>
+                        <span class="countdown-label">Segundos</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="sorteio-container">
+                <h2 class="sorteio-title">Realizar Sorteio</h2>
+                <p class="sorteio-description">Quando chegar o dia do sorteio, clique no botão abaixo para sortear o número vencedor entre todos os participantes.</p>
+                
+                <button class="sorteio-button" id="sorteio-button">Realizar Sorteio</button>
+                
+                <div class="sorteio-result" id="sorteio-result">
+                    <h3 class="result-title">Parabéns ao Ganhador!</h3>
+                    <p>O número sorteado foi:</p>
+                    <div class="winner-number" id="winner-number">00</div>
+                    <p id="winner-name">Nome do ganhador aparecerá aqui</p>
+                    <p>Um PIX de R$ 250,00 será enviado para o ganhador!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="navigation">
+        <a href="index.html" class="nav-button">Voltar para a Página Principal</a>
+    </div>
+    
+    <div class="confetti-container" id="confetti-container"></div>
+    
+    <footer>
+        <p>© 2025 - Chá de Casa Nova</p>
+        <p>Sorteio a ser realizado em 15/05/2025</p>
+    </footer>
+
+    <script>
+        // Configurar a data do sorteio (15 de maio de 2025)
+        const sorteioDate = new Date('May 15, 2025 19:00:00').getTime();
+        
+        // Atualizar o contador a cada segundo
+        const countdown = setInterval(function() {
+            // Obter a data e hora atual
+            const now = new Date().getTime();
+            
+            // Calcular a diferença entre a data do sorteio e agora
+            const distance = sorteioDate - now;
+            
+            // Cálculos para dias, horas, minutos e segundos
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            // Exibir o resultado
+            document.getElementById('days').innerHTML = days.toString().padStart(2, '0');
+            document.getElementById('hours').innerHTML = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').innerHTML = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').innerHTML = seconds.toString().padStart(2, '0');
+            
+            // Se a contagem regressiva terminar, habilitar o botão de sorteio
+            if (distance < 0) {
+                clearInterval(countdown);
+                document.getElementById('days').innerHTML = '00';
+                document.getElementById('hours').innerHTML = '00';
+                document.getElementById('minutes').innerHTML = '00';
+                document.getElementById('seconds').innerHTML = '00';
+                document.getElementById('sorteio-button').disabled = false;
+            } else {
+                // Desabilitar o botão de sorteio enquanto a data não chegar
+                document.getElementById('sorteio-button').disabled = true;
+            }
+        }, 1000);
+        
+        // Função para criar confetes
+        function createConfetti() {
+            const confettiContainer = document.getElementById('confetti-container');
+            confettiContainer.style.display = 'block';
+            
+            const colors = ['#FFD700', '#4CAF50', '#FF6B6B', '#3498db', '#9b59b6', '#e74c3c', '#2ecc71'];
+            
+            for (let i = 0; i < 150; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'absolute';
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = -20 + 'px';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confetti.style.opacity = Math.random() + 0.5;
+                confetti.style.transform = 'rotate(' + Math.random() * 360 + 'deg)';
+                
+                const animationDuration = Math.random() * 3 + 2;
+                confetti.style.animation = `fall ${animationDuration}s linear forwards`;
+                
+                confettiContainer.appendChild(confetti);
+                
+                // Remover confete após a animação
+                setTimeout(() => {
+                    confetti.remove();
+                }, animationDuration * 1000);
+            }
+            
+            // Esconder o container após todos os confetes terminarem
+            setTimeout(() => {
+                confettiContainer.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Adicionar estilo para a animação de queda dos confetes
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes fall {
+                0% {
+                    transform: translateY(0) rotate(0deg);
+                }
+                100% {
+                    transform: translateY(100vh) rotate(360deg);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Função para realizar o sorteio
+        document.getElementById('sorteio-button').addEventListener('click', function() {
+            // Carregar os dados dos participantes do localStorage
+            const dadosString = localStorage.getItem('chaCasaNova');
+            if (!dadosString) {
+                alert('Não há participantes registrados para o sorteio.');
+                return;
+            }
+            
+            const dados = JSON.parse(dadosString);
+            
+            if (dados.numeros_escolhidos.length === 0) {
+                alert('Não há números escolhidos para realizar o sorteio.');
+                return;
+            }
+            
+            // Sortear um número aleatório entre os números escolhidos
+            const numeroSorteado = dados.numeros_escolhidos[Math.floor(Math.random() * dados.numeros_escolhidos.length)];
+            
+            // Encontrar o participante com o número sorteado
+            const participanteVencedor = dados.participantes.find(p => p.numero === numeroSorteado);
+            
+            if (!participanteVencedor) {
+                alert('Erro ao encontrar o participante vencedor.');
+                return;
+            }
+            
+            // Exibir o resultado
+            document.getElementById('winner-number').textContent = numeroSorteado;
+            document.getElementById('winner-name').textContent = `Ganhador: ${participanteVencedor.nome}`;
+            document.getElementById('sorteio-result').style.display = 'flex';
+            
+            // Desabilitar o botão após o sorteio
+            this.disabled = true;
+            
+            // Criar efeito de confetes
+            createConfetti();
+            
+            // Registrar o resultado do sorteio
+            dados.resultado_sorteio = {
+                numero: numeroSorteado,
+                participante: participanteVencedor,
+                data: new Date().toISOString()
+            };
+            
+            // Salvar os dados atualizados
+            localStorage.setItem('chaCasaNova', JSON.stringify(dados));
+        });
+    </script>
+</body>
+</html>

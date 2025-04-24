@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instruções de Uso - Sistema Chá de Casa Nova</title>
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #FFC107;
+            --text-color: #333;
+            --light-bg: #f9f9f9;
+            --accent-color: #2196F3;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--light-bg);
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: var(--accent-color);
+            margin: 15px 0 10px 0;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .highlight {
+            background-color: #fff9c4;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        
+        .tip {
+            background-color: #e8f5e9;
+            border-left: 4px solid var(--primary-color);
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .warning {
+            background-color: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .file-structure {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            margin: 15px 0;
+        }
+        
+        code {
+            background-color: #f5f5f5;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        
+        .button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .button:hover {
+            background-color: #388E3C;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>INSTRUÇÕES DE USO</h1>
+        <p class="subtitle">Sistema de Controle - Chá de Casa Nova</p>
+    </header>
+    
+    <div class="card">
+        <h2>Visão Geral do Sistema</h2>
+        
+        <p>Parabéns! Seu sistema de controle para o Chá de Casa Nova está pronto para uso. Este sistema foi desenvolvido para ajudar você a gerenciar os números escolhidos pelos participantes do seu evento.</p>
+        
+        <p>O sistema inclui:</p>
+        <ul>
+            <li>Uma interface web interativa para visualização da cartela de números</li>
+            <li>Funcionalidade para seleção de números e registro de participantes</li>
+            <li>Armazenamento local dos dados dos participantes e números escolhidos</li>
+            <li>Página detalhada com instruções de pagamento para os participantes</li>
+        </ul>
+    </div>
+    
+    <div class="card">
+        <h2>Estrutura de Arquivos</h2>
+        
+        <p>O sistema é composto pelos seguintes arquivos:</p>
+        
+        <div class="file-structure">
+cha_casa_nova/
+├── index.html              # Página principal com a cartela e formulário
+├── instrucoes_pagamento.html  # Página com instruções detalhadas de pagamento
+├── numeros.json            # Arquivo de dados para armazenar o estado dos números
+├── controle_numeros.py     # Script Python para gerenciamento via linha de comando
+├── selecao_direta.js       # Script JavaScript para seleção direta na cartela
+└── todo.md                 # Lista de tarefas do projeto (pode ser removido)
+        </div>
+    </div>
+    
+    <div class="card">
+        <h2>Como Usar o Sistema</h2>
+        
+        <h3>Opção 1: Interface Web (Recomendada)</h3>
+        
+        <p>A maneira mais fácil de usar o sistema é através da interface web:</p>
+        
+        <ol>
+            <li>Abra o arquivo <code>index.html</code> em qualquer navegador web moderno</li>
+            <li>A cartela de números será exibida, com os números disponíveis em verde e os escolhidos em rosa</li>
+            <li>Para registrar um participante:
+                <ul>
+                    <li>Clique diretamente no número desejado na cartela, ou</li>
+                    <li>Use o formulário na seção "Adicionar Participante" para selecionar o número e preencher os dados</li>
+                </ul>
+            </li>
+            <li>Após adicionar um participante, o número será marcado como escolhido na cartela e o participante aparecerá na lista</li>
+        </ol>
+        
+        <div class="tip">
+            <p><strong>Dica:</strong> Você pode compartilhar o link para a página de instruções de pagamento (<code>instrucoes_pagamento.html</code>) com os participantes para que eles saibam exatamente como proceder com o pagamento.</p>
+        </div>
+        
+        <h3>Opção 2: Script Python (Alternativa)</h3>
+        
+        <p>Se preferir uma interface de linha de comando, você pode usar o script Python:</p>
+        
+        <ol>
+            <li>Abra um terminal ou prompt de comando</li>
+            <li>Navegue até a pasta <code>cha_casa_nova</code></li>
+            <li>Execute o comando: <code>python3 controle_numeros.py</code></li>
+            <li>Siga as instruções no menu interativo para visualizar a cartela, adicionar participantes e gerenciar o sistema</li>
+        </ol>
+        
+        <div class="warning">
+            <p><strong>Importante:</strong> O script Python e a interface web usam o mesmo arquivo de dados (<code>numeros.json</code>), então as alterações feitas em um serão refletidas no outro. Evite usar os dois simultaneamente para prevenir conflitos.</p>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h2>Hospedagem e Compartilhamento</h2>
+        
+        <p>Para compartilhar o sistema com outras pessoas ou acessá-lo de diferentes dispositivos, você tem algumas opções:</p>
+        
+        <h3>Opção 1: Compartilhamento Local</h3>
+        <p>Você pode simplesmente copiar a pasta <code>cha_casa_nova</code> para um pendrive ou compartilhá-la via serviços de armazenamento em nuvem como Google Drive ou Dropbox.</p>
+        
+        <h3>Opção 2: Hospedagem Web</h3>
+        <p>Para uma experiência mais profissional, você pode hospedar o sistema em um serviço de hospedagem web:</p>
+        <ul>
+            <li>GitHub Pages (gratuito)</li>
+            <li>Netlify (gratuito)</li>
+            <li>Vercel (gratuito)</li>
+            <li>Qualquer serviço de hospedagem web que suporte HTML/CSS/JavaScript</li>
+        </ul>
+        
+        <div class="tip">
+            <p><strong>Dica:</strong> Se optar pela hospedagem web, será necessário implementar um backend para armazenar os dados, pois o armazenamento local (localStorage) só funciona no mesmo dispositivo. Entre em contato se precisar de ajuda com essa implementação.</p>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h2>Backup e Segurança</h2>
+        
+        <p>É importante manter seus dados seguros:</p>
+        
+        <ul>
+            <li>Faça backups regulares do arquivo <code>numeros.json</code>, que contém todos os dados dos participantes e números escolhidos</li>
+            <li>Se estiver usando a interface web, os dados são armazenados no localStorage do navegador. Limpar os dados do navegador pode resultar na perda dessas informações</li>
+            <li>Considere exportar periodicamente a lista de participantes para um arquivo separado como backup adicional</li>
+        </ul>
+    </div>
+    
+    <div class="card">
+        <h2>Personalização</h2>
+        
+        <p>Você pode personalizar o sistema de acordo com suas necessidades:</p>
+        
+        <ul>
+            <li>Edite o arquivo <code>index.html</code> para alterar cores, textos ou layout</li>
+            <li>Modifique as instruções de pagamento em <code>instrucoes_pagamento.html</code></li>
+            <li>Adicione seu logotipo ou imagens personalizadas</li>
+            <li>Ajuste o valor dos números ou a data do sorteio conforme necessário</li>
+        </ul>
+        
+        <div class="tip">
+            <p><strong>Dica:</strong> Se não estiver familiarizado com HTML/CSS, faça apenas pequenas alterações nos textos, mantendo a estrutura original dos arquivos.</p>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h2>Suporte e Contato</h2>
+        
+        <p>Se precisar de ajuda com o sistema ou tiver dúvidas sobre seu funcionamento, não hesite em entrar em contato.</p>
+        
+        <p>Desejamos muito sucesso no seu Chá de Casa Nova!</p>
+    </div>
+    
+    <footer>
+        <p>© 2025 - Sistema de Controle para Chá de Casa Nova</p>
+    </footer>
+</body>
+</html>
